@@ -48,18 +48,15 @@ import squaredR from '../components/squaredR.js'
     dataset15: normalRandomMarsaglia(70, 10),
     dataset16: normalRandomMarsaglia(32, 5),
   }));
-
+const y = pre_initialData.map(d => [d.dataset1]);
+console.log("y", JSON.stringify(y));
 
 const initialData = [...pre_initialData].sort((a, b) => a.dataset2 - b.dataset2);
-
-
-
-  // Initial regression (only using dataset2 as predictor)
 const initialDesignMatrix = createDesignMatrix(initialData.map(d => [d.dataset2]));
-const y = initialData.map(d => [d.dataset1]);
-console.log("y", JSON.stringify(y));
 const initialBetas = OLS(initialDesignMatrix, y);
 const initialModel = multiplyMatrices(initialDesignMatrix, initialBetas).map(row => row[0]);
+
+
 
 
 
@@ -138,7 +135,7 @@ export default function AddPredictors(){
     setPValue(pValues);
   }
 
-  
+
 
 
 

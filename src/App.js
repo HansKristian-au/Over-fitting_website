@@ -11,7 +11,7 @@ import {
 
 import {Link, Route, Routes} from 'react-router-dom'
 import  AddPredictors  from './Pages/addPredictors.js'
-import {Contact} from './Pages/page2.js'
+import UnivariatePreScreening from './Pages/page2.js'
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
     
     <Routes>
       <Route path="/" element={<AddPredictors />} />
-      <Route path="/page2" element={<Contact/>} />
+      <Route path="/page2" element={<UnivariatePreScreening />} />
     </Routes>
   </>  
   )
