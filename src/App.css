@@ -50,14 +50,29 @@
 .square {
   background: #fff;
   border: 1px solid #999;
-  float: left;
-  font-size: 24px;
+  font-size: 8px;
   font-weight: bold;
-  line-height: 34px;
   height: 34px;
+  width: 60px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 34px;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.pValueBox {
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: max-content;
+  font-family: monospace;
+}
+
+.pValueItem {
+  padding: 4px;
+  font-size: 14px;
+  text-align: center;
 }

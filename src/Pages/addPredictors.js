@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import '../App.css'
+import { useState, useEffect, useMemo } from "react";
 import {
   Line,
   LineChart,
@@ -9,52 +10,25 @@ import {
   Legend,
 } from "recharts";
 
-import {Link, Route, Routes} from 'react-router-dom'
-import  AddPredictors  from './Pages/addPredictors.js'
-import {Contact} from './Pages/page2.js'
-
-function App() {
-  return (
-   <>
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Add_Predictors</Link>
-        </li>
-        <li>
-          <Link to="/page2">Univariate_Pre-testing</Link>
-        </li>
-      </ul>
-    </nav>
-    
-    <Routes>
-      <Route path="/" element={<AddPredictors />} />
-      <Route path="/page2" element={<Contact/>} />
-    </Routes>
-  </>  
-  )
-}
+import multiplyMatrices from '../components/multiplyMatrices'
+import createDesignMatrix from '../components/createDesignMatrix'
+import OLS from '../components/OLS'
+import normalRandomMarsaglia from '../components/normalRandomMarsaglia'
 
 
-//import addPredictors from './Pages/addPredictors.js'
-
-export default App
+//import calculateSSR from '../components/calculateSSR.js'
+//import calculateVar from '../components/calculateVar.js'
+//import calculateSE from '../components/calculateSE.js'
+//import calculateT from '../components/calculateT.js'
+//import calculateP from '../components/calculateP.js'
+import pStatistic from '../components/pStatistic.js'
 
 
 
-  function normalRandomMarsaglia(mean = 0, stdDev = 1) {
-    let u, v, s;
-    do {
-      u = 2 * Math.random() - 1;
-      v = 2 * Math.random() - 1;
-      s = u * u + v * v;
-    } while (s >= 1 || s === 0);
 
-    let multiplier = Math.sqrt(-2.0 * Math.log(s) / s);
-    return mean + stdDev * u * multiplier;
-  }
 
-  // Generate dataset
+
+
   const pre_initialData = Array.from({ length: 20 }, () => ({
     dataset1: normalRandomMarsaglia(50, 10),
     dataset2: normalRandomMarsaglia(40, 5),
@@ -71,127 +45,39 @@ export default App
     dataset13: normalRandomMarsaglia(37, 4),
     dataset14: normalRandomMarsaglia(26, 8),
     dataset15: normalRandomMarsaglia(70, 10),
-    dataset16: normalRandomMarsaglia(32, 5), // Example additional predictor
+    dataset16: normalRandomMarsaglia(32, 5),
   }));
 
-  function createDesignMatrix(data) {
-    return data.map(row => [1, ...row]);
-  }
 
-  function transposeMatrix(matrix) {
-    return matrix[0].map((_, colIndex) => matrix.map(row => row[colIndex]));
-  }
+const initialData = [...pre_initialData].sort((a, b) => a.dataset2 - b.dataset2);
 
-  function multiplyMatrices(A, B) {
-    if (A[0].length !== B.length) {
-      throw new Error("Number of columns in A must match number of rows in B");
-    }
-    return A.map(row =>
-      B[0].map((_, colIndex) =>
-        row.reduce((sum, value, rowIndex) => sum + value * B[rowIndex][colIndex], 0)
-      )
-    );
-  }
 
-  function mean(X) {
-    const sum = X.reduce((acc, value) => acc + value, 0)
-    return sum / X.length;
-  }
-
-  function calculateSSR (y) {
-
-    if (Array.isArray(y[0])){
-      y = y.map(arr => arr[0]);
-    }
-
-    let meanY = mean(y)
-
-    const residuals = y.map(value => value - meanY)
-
-    const residualsSquared = residuals.map(residual => residual*residual)
-
-    const SSR = residualsSquared.reduce((acc, value) => acc + value, 0)
-
-    return SSR
- }
-  
-
-  function inverseMatrix(matrix) {
-    const n = matrix.length;
-    let identity = matrix.map((row, i) =>
-      row.map((_, j) => (i === j ? 1 : 0))
-    );
-    let augmented = matrix.map((row, i) => row.concat(identity[i]));
-
-    for (let i = 0; i < n; i++) {
-      let maxRow = i;
-      for (let k = i + 1; k < n; k++) {
-        if (Math.abs(augmented[k][i]) > Math.abs(augmented[maxRow][i])) {
-          maxRow = k;
-        }
-      }
-      [augmented[i], augmented[maxRow]] = [augmented[maxRow], augmented[i]];
-
-      let pivot = augmented[i][i];
-      if (pivot === 0) {
-        throw new Error("Matrix is singular and cannot be inverted.");
-      }
-
-      for (let j = 0; j < 2 * n; j++) {
-        augmented[i][j] /= pivot;
-      }
-
-      for (let k = 0; k < n; k++) {
-        if (k !== i) {
-          let factor = augmented[k][i];
-          for (let j = 0; j < 2 * n; j++) {
-            augmented[k][j] -= factor * augmented[i][j];
-          }
-        }
-      }
-    }
-
-    return augmented.map(row => row.slice(n));
-  }
-
-  function OLS(X, y) {
-    let transpose = transposeMatrix(X);
-    let firstMult = multiplyMatrices(transpose, X);
-    let inverse = inverseMatrix(firstMult);
-    let secondMult = multiplyMatrices(inverse, transpose);
-    let betasRows = multiplyMatrices(secondMult, y);
-    return betasRows.map(b => [b]);
-  }
-
-  function sortData(data) {
-    return [...data].sort((a, b) => a.dataset2 - b.dataset2);
-  }
-
-   const initialData = sortData(pre_initialData)
 
   // Initial regression (only using dataset2 as predictor)
-  const initialDesignMatrix = createDesignMatrix(initialData.map(d => [d.dataset2]));
-  const y = initialData.map(d => [d.dataset1]);
-  const initialBetas = OLS(initialDesignMatrix, y);
-  const initialModel = multiplyMatrices(initialDesignMatrix, initialBetas).map(row => row[0]);
+const initialDesignMatrix = createDesignMatrix(initialData.map(d => [d.dataset2]));
+const y = initialData.map(d => [d.dataset1]);
+console.log("y", JSON.stringify(y));
+const initialBetas = OLS(initialDesignMatrix, y);
+const initialModel = multiplyMatrices(initialDesignMatrix, initialBetas).map(row => row[0]);
 
 
 
- function Graph1() {
+export default function AddPredictors(){
   // State for dynamic data updates
   const [updatedData, setUpdatedData] = useState(
     (initialData.map((d, i) => ({ ...d, model: initialModel[i] })))
   );
 
 
-
   const [predictors, setPredictors] = useState(["dataset2"]); // Track included predictors
 
+  const [pValue, setPValue] = useState([])
+
   function addPredictorsToRegression(...newPredictorKeys) {
-    //console.log("Updated Data Before Regression:", updatedData);
+    console.log("Updated Data Before Regression:", updatedData);
     const newPredictors = [...new Set([...predictors, ...newPredictorKeys])]; // Ensure uniqueness
-    //console.log("Predictors before update:", predictors);
-    //console.log("Predictors after update:", [...new Set([...predictors, ...newPredictorKeys])]);
+    console.log("Predictors before update:", predictors);
+    console.log("Predictors after update:", [...new Set([...predictors, ...newPredictorKeys])]);
     
     
     
@@ -203,15 +89,39 @@ export default App
   
     );
  
-   // console.log('DM:', extendedDesignMatrix) 
+    console.log('DM:', JSON.stringify(extendedDesignMatrix)) 
     // Run OLS with the extended matrix
     const newBetas = OLS(extendedDesignMatrix, y);
 
+    
+
     // Compute new predictions
     const newModel = multiplyMatrices(extendedDesignMatrix, newBetas).map(row => row[0]);
+    console.log("newmodel", JSON.stringify(newModel))
+
+     //calcutating p-value**
+     //const SSR = calculateSSR(y, newModel)
+     //console.log("SSR", SSR)
+     //const variancesBetas = calculateVar(extendedDesignMatrix)
+     //console.log("variances", JSON.stringify(variancesBetas))
+     //const SE_Betas = calculateSE(y, variancesBetas, SSR)
+     //console.log("SE_betas", JSON.stringify(SE_Betas))
+     //const tStatistic = calculateT(newBetas, SE_Betas)
+     //console.log("t-statistic", JSON.stringify(tStatistic))
+     //const pValues = calculateP(tStatistic, y)
+     //console.log("p-values", JSON.stringify(pValues))
+
+     const pValues = pStatistic(y, newModel, extendedDesignMatrix, newBetas);
+
+
+     //calcutlatin p-value**
+
+
 
     const dataNewModel = updatedData.map((d, i) => ({ ...d, model: newModel[i] }))
 
+     
+ 
   
 
     setUpdatedData(dataNewModel)
@@ -220,7 +130,8 @@ export default App
     //setUpdatedData(prevData => sortData(prevData.map((d, i) => ({ ...d, model: newModel[i] }))));
     setPredictors(newPredictors);
 
-    console.log("updatedData after regression:", updatedData)
+    
+    setPValue(pValues);
   }
 
   
@@ -260,6 +171,7 @@ export default App
     
  
   return (
+   <> 
     <div className="Chart" style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "600px" }}>
       <p>Plotted Data</p>
       <LineChart width={1000} height={300} data={updatedData}>
@@ -288,8 +200,14 @@ export default App
       <button onClick={() => {handleAddDataset("dataset15")}} disabled={clicked.dataset15}>Add Dataset 15</button>
       <button onClick={() => {handleAddDataset("dataset16")}} disabled={clicked.dataset16}>Add Dataset 16</button>
     </div>
+    <div className="pValueBox">
+      {(pValue).map((value, i) =>
+        <div className="pValueItem" key={i}>
+          {value.toFixed(3)}
+        </div>
+      )}
+    </div>  
+      
+   </> 
   );
-};
-
-
-
+}
