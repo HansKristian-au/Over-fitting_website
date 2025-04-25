@@ -1,5 +1,0 @@
- export default function calculateMean(X) {
-    const sum = X.reduce((acc, value) => acc + value, 0)
-    return sum / X.length;
-  }
-  

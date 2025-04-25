@@ -22,6 +22,7 @@ import normalRandomMarsaglia from '../components/normalRandomMarsaglia'
 //import calculateT from '../components/calculateT.js'
 //import calculateP from '../components/calculateP.js'
 import pStatistic from '../components/pStatistic.js'
+import squaredR from '../components/squaredR.js'
 
 
 
@@ -112,6 +113,9 @@ export default function AddPredictors(){
      //console.log("p-values", JSON.stringify(pValues))
 
      const pValues = pStatistic(y, newModel, extendedDesignMatrix, newBetas);
+
+     const rSquared = squaredR(y, newModel)
+     console.log('R-Squared', rSquared)
 
 
      //calcutlatin p-value**
