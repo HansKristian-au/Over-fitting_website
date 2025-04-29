@@ -178,7 +178,17 @@ export default function AddPredictors(){
       <LineChart width={1000} height={300} data={updatedData}>
         <CartesianGrid />
         <XAxis dataKey="dataset2" scale="linear" />
-        <YAxis />
+        <YAxis  label={
+    <text
+      x={-20}
+      y={15}  // adjust based on chart height (near bottom)
+      transform="rotate(-90)"
+      textAnchor="end"
+      fill="#666"
+    >
+      Total Hours of Sleep in a Week
+    </text>
+  }/>
         <Tooltip />
         <Legend />
         <Line type="linear" dataKey="model" stroke="red" dot={false} />
@@ -186,7 +196,7 @@ export default function AddPredictors(){
       </LineChart>
 
       
-      <button onClick={() => {handleAddDataset("dataset3")}} disabled={clicked.dataset3}>Add Dataset 3</button>
+      <button onClick={() => {handleAddDataset("dataset3")}} disabled={clicked.dataset3}>Add Broccoli</button>
       <button onClick={() => addPredictorsToRegression("dataset4")}>Add Dataset 4</button>
       <button onClick={() => {handleAddDataset("dataset5")}} disabled={clicked.dataset5}>Add Dataset 5</button>
       <button onClick={() => {handleAddDataset("dataset6")}} disabled={clicked.dataset6}>Add Dataset 6</button>
