@@ -67,7 +67,6 @@
   background: #f9f9f9;
   border: 1px solid #ccc;
   padding: 10px;
-  width: max-content;
   font-family: monospace;
 }
 
@@ -75,4 +74,320 @@
   padding: 4px;
   font-size: 14px;
   text-align: center;
+}
+
+.layout-container {
+  display: grid;
+  grid-template-areas:
+    "chart"
+    "model-display"
+    "metrics-row"
+    "controls-row"
+    "extra";
+  grid-template-columns: 1fr;
+  gap: 30px;
+  padding: 30px;
+  max-width: 1060px;
+  margin: auto;
+}
+
+/* Assign each section to a grid area */
+.chart-box {
+  grid-area: chart;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  grid-column: span 3;
+}
+
+.button-grid {
+  grid-area: buttons;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 10px;
+  justify-content: flex-start;
+  max-width: 515px;
+  margin-left: 60px;
+}
+
+.pValueBox {
+  grid-area: pvalues;
+  
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+
+  max-height: 135px;
+  width: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background: #f9f9f9;
+ 
+  padding: 10px;
+  font-family: monospace;
+}
+
+.pValueHeader {
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 4px;
+}
+
+.pValueLabel {
+  font-size: 14px;
+  text-align: left;
+}
+
+.pValueItem {
+  font-size: 14px;
+  text-align: center;
+}
+
+.rSquared-box {
+  grid-area: rsquared;
+  
+  
+
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-family: monospace;
+  max-width: 150px;
+  max-height:100px;
+  font-size: 20px;
+
+  
+}
+
+.extra-controls {
+  grid-area: extra;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* Optional styling for consistent button appearance */
+.button-grid button,
+.extra-controls button {
+  min-width: 120px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.tooltip-button-wrapper {
+  position: relative;
+  display: inline-block;
+  grid-area: tooltip-button-wrapper;
+}
+
+.hover-button {
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.hover-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: -40px; /* appears above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+  z-index: 10;
+}
+
+.tooltip-button-wrapper:hover .hover-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.model-display {
+  grid-area: model-display;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 16px;
+
+  width: 935px;
+  height: 60px;        /* adjust to fit your design */
+  overflow-x: auto;    /* scroll horizontally if too long */
+  overflow-y: hidden;
+  white-space: nowrap; /* prevent wrapping to new lines */
+
+  box-sizing: border-box;
+
+  margin-left: 60px;
+}
+
+.controls-row {
+  grid-area: controls-row;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+
+  margin-left: 60px;
+}
+
+.extra-display {
+  grid-area: extra;
+  width: 935px;
+ 
+  margin: 0 auto;
+  overflow-x: auto;
+  
+  
+  margin-left: 60px;
+}
+
+
+
+
+.metrics-row {
+  grid-area: metrics-row;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.arrow-and-button {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* space between arrow and button */
+}
+
+.arrow-label {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 18px;
+  animation: pulse 1s infinite alternate;
+  text-align: center;
+}
+
+@keyframes pulse {
+  from { opacity: 0.4; transform: translateX(-5px); }
+  to   { opacity: 1; transform: translateX(0px); }
+}
+
+
+.recollect-button {
+  padding: 6px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  max-width: 120px;
+  margin-left: 500px;
+
+}
+
+
+.predictor-stepper-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #f9f9f9;
+  border-radius: 6px;
+
+  width: 652px;
+  max-width: 652px;
+  min-width: 652px;
+}
+
+.stepper-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: monospace;
+  font-size: 16px;
+}
+
+.stepper-arrow {
+  cursor: pointer;
+  user-select: none;
+  padding: 0 5px;
+  font-size: 18px;
+}
+
+.stepper-number {
+  margin: 5px 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+.bonferroni-toggle {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 10px;
+  gap: 6px;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #555;
+  display: inline-block;
+  position: relative;
+}
+
+.checkbox.checked::after {
+  content: "✓";
+  position: absolute;
+  top: -3px;
+  left: 2px;
+  font-size: 14px;
+  color: #10B981;
+}
+
+
+
+
+
+.predictor-controls-row {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  margin-left: 60px;
+}
+
+.bonferroni-metrics-box {
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px 16px;
+  font-family: monospace;
+  font-size: 14px;
+  width: fit-content;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+
+  border-radius: 6px;
+}
+
+.bonferroni-line {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.metric-label {
+  font-weight: bold;
 }
