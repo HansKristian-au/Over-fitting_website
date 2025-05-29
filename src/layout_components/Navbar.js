@@ -6,6 +6,8 @@ export default function Navbar() {
     <nav className="navbar">
       <NavLink to="/" className="nav-link">Add Predictors</NavLink>
       <NavLink to="/page2" className="nav-link">Univariate Pre-testing</NavLink>
+      <NavLink to="/correctives" className="nav-link">Correctives</NavLink>
+
     </nav>
   );
 }

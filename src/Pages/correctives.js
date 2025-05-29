@@ -61,7 +61,7 @@ const initialData = [...pre_initialData].sort((a, b) => a.variable2 - b.variable
 
 
 
-export default function AddPredictors(){
+export default function Correctives(){
   // State for dynamic data updates
  // const [updatedData, setUpdatedData] = useState(
  //   (initialData.map((d, i) => ({ ...d, model: initialModel[i] })))
@@ -472,7 +472,7 @@ function formatThreshold(threshold) {
   
         </div>
       
-        <div className="rSquared-box" style={{marginLeft: '47px'}}>
+        <div className="rSquared-box">
           <div>
             R² ={" "}
             <span
@@ -486,7 +486,13 @@ function formatThreshold(threshold) {
               {typeof rSquared === "number" ? rSquared.toFixed(3) : "..."}
             </span>
            </div>
-           
+           <hr style={{ margin: "10px 0", border: "0", borderTop: "1px solid #ccc" }} />
+           <div>
+           Adjusted R² ={" "}
+           <span style={{ color: rSquaredAdjusted < 0.3 ? "red" : rSquaredAdjusted < 0.6 ? "orange" : "#10B981" }}>
+             {typeof rSquaredAdjusted === "number" ? rSquaredAdjusted.toFixed(3) : "..."}
+           </span>
+           </div> 
         </div>
         <div className="pValueBox" style={{ border: `${polishedDataset ? '2px' : '1px'} solid ${polishedDataset ? '#10B981' : '#ccc'}`}}>
           <div className="pValueHeader">predictor</div>
@@ -543,7 +549,48 @@ function formatThreshold(threshold) {
           />
          </div> 
         )}
-         
+         <div className='predictor-controls-row'>
+            <div className="predictor-stepper-box">
+              <button onClick={() => addMultipleUnusedPredictors(numToAdd)} disabled={!!polishedDataset}>Add</button>
+
+              <div className="stepper-display">
+                <div className="stepper-arrow" onClick={() => setNumToAdd(n => Math.min(n + 1, maxAddable))}>▲</div>
+                <div className="stepper-number">{numToAdd}</div>
+                <div className="stepper-arrow" onClick={() => setNumToAdd(n => n > 1 ? n - 1 : n)}>▼</div>
+              </div>
+              <div style={{ height: "2.8em", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <p style={{ fontSize: "14px", fontStyle: "italic", margin: 0, textalign: "center" }}>
+                Chance of at least one false positive when adding {numToAdd} predictor{numToAdd > 1 ? "s" : ""}:{" "}
+                <span>
+                <strong>{(probFalsePositive * 100).toFixed(1)}%</strong>
+                </span>
+                <span
+                    style={{
+                      visibility: bonferroniOn ? "visible" : "hidden",
+                      display: "inline-block",
+                      width: "auto",
+                    }}
+                  >
+                    (Bonferroni-adjusted)
+                  </span>
+              </p>
+              </div>
+              <div className="bonferroni-toggle" onClick={() => setBonferroniOn(prev => !prev)}>
+                <div className={`checkbox ${bonferroniOn ? "checked" : ""}`}></div>
+                <label>Bonferroni correction</label>
+              </div>
+            </div>
+              <div className="bonferroni-metrics-box" style={{ visibility: bonferroniOn ? "visible" : "hidden" }}>
+                <div className="bonferroni-line">
+                    <span className="metric-label"># of tests:</span> {testCount}
+                  </div>
+                  <div className="bonferroni-line">
+                    <span className="metric-label">p-value threshold:</span> {formatThreshold(pValueThreshold)}
+                </div>
+              </div>
+              
+            
+          </div>
         
     </div>  
    </> 
