@@ -409,6 +409,8 @@ function formatThreshold(threshold) {
  
   return (
    <> 
+  
+
      <div className="layout-container">
       <div className="Chart" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <p style={{fontSize : "20px", fontWeight: "bold", marginBottom: "1em"}}>
@@ -417,7 +419,11 @@ function formatThreshold(threshold) {
       <p style={{border: "1px solid #ccc", background: "#f9f9f9", padding: "5px"}}>
        Over-fitting is when a model finds a significant relationship in a sample which doesn't exist in the wider population from which the sample was drawn. This is an issue, because if the relationship doesn't exist in the wider population then your model will not predict your outcome variable no matter how significant your p-value is. <br />
        This webapp is designed to illustrate how adding too many predictors to a model can lead to over-fitting. Below is a linear regression with a single predictor and your assignment will be to add predictors while observing how it affects the R^2 value and the p-values.<br /> 
-       There is an important twist: even though all the variables below are given food names they are randomized variables. This means that any significant p-values you find will be spurious and the R^2 value should ideally be zero. Notice that in spite of this the R^2 always increases when a predictor is added and you almost always get a significant p-value. When you get a significant p-value the app will force you to engage in some bad practice by creating a report of your results. After creating the report you can collect more data to see if your model actually predicts the outcome variable. You'll see that it does not!
+       There is an important twist: even though all the variables below are given food names they are randomized variables. This means that any significant p-values you find will be spurious and the R^2 value should ideally be zero. Notice that in spite of this the R^2 always increases when a predictor is added and you almost always get a significant p-value. When you get a significant p-value the app will force you to engage in some bad practice by creating a report of your results. After creating the report you can collect more data to see if your model actually predicts the outcome variable. You'll see that it does not! <br />
+        <p>
+            This {" "}  
+            <a href="/Over-fitting_Paper.pdf" target="_blank" rel="noopener noreferrer">article</a> gives a more detailed description of the applet and over-fitting.
+          </p>
         </p>
         <p style={{border: "1px solid #ccc", background: "#f9f9f9", padding: "5px"}}>
         Study: Does what you eat affect how you sleep?<br />

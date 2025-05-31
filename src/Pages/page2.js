@@ -186,7 +186,11 @@ export default function UnivariatePreScreening() {
           <p style={{border: "1px solid #ccc", background: "#f9f9f9", padding: "5px"}}>
           Over-fitting is when a model finds a significant relationship in a sample which doesn't exist in the wider population from which the sample was drawn. This is an issue, because if the relationship doesn't exist in the wider population then your model will not predict your outcome variable no matter how significant your p-value is.<br />
           This webapp illustrates how testing your predictors independently before adding them to your final model increases the risk of over-fitting. Below is a linear regression layout where you can make a univariable model for each predictor in your dataset(which is what univariable pre-testing is). Your assignment will be to create models until you find a significant relationship between a predictor and the sleep variable. <br />
-          There is an important twist: even though all the variables below are given food names they are randomized variables. This means that any significant p-values you find will be spurious and the R^2 value should ideally be zero. Notice that in spite of this the R^2 is sometimes quite high and you can get more than one significant p-value from the same dataset. When you get a significant p-value you can try pressing the 'recolloct data' button and see if your model can predict sleep hours. You'll see that it does not!
+          There is an important twist: even though all the variables below are given food names they are randomized variables. This means that any significant p-values you find will be spurious and the R^2 value should ideally be zero. Notice that in spite of this the R^2 is sometimes quite high and you can get more than one significant p-value from the same dataset. When you get a significant p-value you can try pressing the 'recolloct data' button and see if your model can predict sleep hours. You'll see that it does not! <br />
+          <p>
+            This {" "}  
+            <a href="/Over-fitting_Paper.pdf" target="_blank" rel="noopener noreferrer">article</a> gives a more detailed description of the applet and over-fitting.
+          </p>
             </p>
             <p style={{border: "1px solid #ccc", background: "#f9f9f9", padding: "5px"}}>
             Study: Does what you eat affect how you sleep?<br />
