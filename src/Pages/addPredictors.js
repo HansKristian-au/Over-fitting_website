@@ -422,7 +422,7 @@ function formatThreshold(threshold) {
        There is an important twist: even though all the variables below are given food names they are randomized variables. This means that any significant p-values you find will be spurious and the R^2 value should ideally be zero. Notice that in spite of this the R^2 always increases when a predictor is added and you almost always get a significant p-value. When you get a significant p-value the app will force you to engage in some bad practice by creating a report of your results. After creating the report you can collect more data to see if your model actually predicts the outcome variable. You'll see that it does not! <br />
         <p>
             This {" "}  
-            <a href="/Over-fitting_Paper.pdf" target="_blank" rel="noopener noreferrer">article</a> gives a more detailed description of the applet and over-fitting.
+            <a href={`${process.env.PUBLIC_URL}/Over-fitting_Paper.pdf`} target="_blank" rel="noopener noreferrer">article</a> gives a more detailed description of the applet and over-fitting.
           </p>
         </p>
         <p style={{border: "1px solid #ccc", background: "#f9f9f9", padding: "5px"}}>
